@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yazım Kuralları</title>
+  <link rel="icon" href="public/assets/favicon.svg" />
+  <link rel="stylesheet" href="public/css/style.css" />
+</head>
+<body>
+  <div id="authScreen" class="auth-screen">
+    <section class="login-card">
+      <div class="brand-badge">YK</div>
+      <h1>Yazım Kuralları</h1>
+      <p>Giriş yapmak için şifreyi yaz.</p>
+      <form id="loginForm" class="login-form">
+        <label for="passwordInput">Şifreyi girin</label>
+        <div class="password-row">
+          <input id="passwordInput" type="password" autocomplete="current-password" placeholder="Şifre" />
+          <button type="submit">Giriş</button>
+        </div>
+        <p id="loginError" class="error-text" aria-live="polite"></p>
+      </form>
+    </section>
+  </div>
+
+  <div id="appShell" class="app-shell hidden">
+    <header class="topbar">
+      <a class="logo" href="#home" data-route="home"><span>YK</span> Yazım Kuralları</a>
+      <nav class="nav">
+        <button data-route="daily">Günlük Test</button>
+        <button data-route="new">Yeni Testler</button>
+        <button data-route="easy">Kolay</button>
+        <button data-route="medium">Orta</button>
+        <button data-route="hard">Zor</button>
+        <button data-route="mistakes">Yanlışlarım</button>
+        <button data-route="stats">İstatistik</button>
+      </nav>
+      <div class="top-actions">
+        <button id="themeBtn" class="icon-btn" title="Tema değiştir">☾</button>
+        <a class="admin-link" href="admin.html">Admin</a>
+        <button id="logoutBtn" class="ghost-btn">Çıkış</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <section id="homeView" class="view">
+        <div class="hero-card">
+          <div>
+            <p class="eyebrow">Sınav odaklı çalışma</p>
+            <h2>Hoş geldin. Bugün yazım kuralları sorusu çözeceksin.</h2>
+            <p>Her gün 10 soru çöz, yanlışlarını tekrar et, karıştırdığın kelimeleri listele ve ilerlemeni takip et.</p>
+            <div class="hero-actions">
+              <button class="primary-btn" data-route="daily">Günlük 10 Soruya Başla</button>
+              <button class="secondary-btn" data-route="mistakes">Yanlışları Tekrar Çöz</button>
+            </div>
+          </div>
+          <aside class="streak-card">
+            <span>Seri</span>
+            <strong id="streakCount">0 gün</strong>
+            <small>Üst üste çalışma takibi</small>
+          </aside>
+        </div>
+
+        <div class="grid-3">
+          <article class="info-card"><h3>Yeni Testler</h3><p>Yeni eklenen testleri sırayla çöz.</p><button data-route="new">Aç</button></article>
+          <article class="info-card"><h3>Zorluk Seç</h3><p>Kolay, orta ve zor seviyede pratik yap.</p><button data-route="easy">Başla</button></article>
+          <article class="info-card"><h3>Yanlış Analizi</h3><p>En çok hata yaptığın kelimeleri gör.</p><button data-route="stats">İncele</button></article>
+        </div>
+      </section>
+
+      <section id="listView" class="view hidden">
+        <div class="section-head">
+          <div><p class="eyebrow" id="listEyebrow">Testler</p><h2 id="listTitle">Test Listesi</h2></div>
+          <button class="secondary-btn" data-route="home">Ana Sayfa</button>
+        </div>
+        <div id="testList" class="test-list"></div>
+      </section>
+
+      <section id="quizView" class="view hidden">
+        <div class="quiz-head">
+          <button id="backToListBtn" class="ghost-btn">← Listeye Dön</button>
+          <div class="progress-wrap"><div id="progressBar" class="progress-bar"></div></div>
+          <span id="questionCounter" class="counter">1/10</span>
+        </div>
+        <article class="question-card">
+          <p id="ruleTag" class="rule-tag">Yazım Kuralı</p>
+          <h2 id="questionText"></h2>
+          <div id="optionsBox" class="options-box"></div>
+          <div id="explanationBox" class="explanation-box hidden"></div>
+          <button id="nextBtn" class="primary-btn hidden">Sonraki Soru</button>
+        </article>
+      </section>
+
+      <section id="resultView" class="view hidden">
+        <div class="result-card">
+          <p class="eyebrow">Test bitti</p>
+          <h2 id="resultTitle">Sonuç</h2>
+          <div class="result-grid">
+            <div><span>Doğru</span><strong id="correctCount">0</strong></div>
+            <div><span>Yanlış</span><strong id="wrongCount">0</strong></div>
+            <div><span>Başarı</span><strong id="successRate">0%</strong></div>
+          </div>
+          <h3>Yanlış Kelimeler</h3>
+          <ul id="wrongWordsList" class="word-list"></ul>
+          <div class="hero-actions">
+            <button class="primary-btn" data-route="daily">Yeni Günlük Test</button>
+            <button class="secondary-btn" data-route="mistakes">Yanlışları Çöz</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="statsView" class="view hidden">
+        <div class="section-head"><div><p class="eyebrow">Takip</p><h2>İstatistikler</h2></div></div>
+        <div class="grid-3">
+          <article class="stat-box"><span>Toplam Çözülen</span><strong id="totalAnswered">0</strong></article>
+          <article class="stat-box"><span>Toplam Doğru</span><strong id="totalCorrect">0</strong></article>
+          <article class="stat-box"><span>Seri</span><strong id="statsStreak">0 gün</strong></article>
+        </div>
+        <article class="wide-card">
+          <h3>En Çok Yanlış Yapılan Kelimeler</h3>
+          <div id="mostWrongWords" class="chips"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="public/js/config.js"></script>
+  <script src="public/js/data.js"></script>
+  <script src="public/js/storage.js"></script>
+  <script src="public/js/auth.js"></script>
+  <script src="public/js/app.js"></script>
+</body>
+</html>
